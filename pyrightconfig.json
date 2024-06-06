@@ -1,0 +1,10 @@
+    {
+    "include": ["**/*.py","src"],
+    "exclude": ["**/__pycache__","**/*.pyc","**/*.pyo"],
+    "reportMissingImports": true,
+    "reportMissingTypeStubs": false,
+    "executionEnvironments" : [{
+            "root":"src"
+    }]
+    }
+    

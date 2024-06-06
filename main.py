@@ -5,6 +5,8 @@ from binascii import hexlify
 from json import dumps
 from sys import argv
 from datetime import datetime
+import tkinter as tk
+import json
 
 # Configure update duration (update after n seconds)
 UPDATE_DURATION = 1
@@ -141,6 +143,55 @@ def run():
                 f.close()
             else:
                 print(json_data)
+                def get_updated_json_data():
+                    return json.loads(json_data)
+
+                def create_widget():
+                    def update_labels():
+                        json_dataer = get_updated_json_data()
+                        for key, value in json_dataer.items():
+                            if isinstance(value, dict):
+                                for sub_key, sub_value in value.items():
+                                    full_key = f"{key} {sub_key}"
+                                    labels[full_key].config(text=f"{full_key}: {sub_value}")
+                            else:
+                                labels[key].config(text=f"{key}: {value}")
+
+                        # Schedule the function to be called again after 10 seconds (10000 milliseconds)
+                        root.after(10000, update_labels)
+
+                    # Create main window
+                    root = tk.Tk()
+                    root.title("Bluetooth Info")
+
+                    # Create a dictionary to hold the labels
+                    labels = {}
+
+                    # Initial display of JSON data
+                    json_dataer = get_updated_json_data()
+                    for key, value in json_dataer.items():
+                        if isinstance(value, dict):
+                            for sub_key, sub_value in value.items():
+                                full_key = f"{key} {sub_key}"
+                                labels[full_key] = tk.Label(root, text=f"{full_key}: {sub_value}", bg='white', font=('Arial', 10))
+                                labels[full_key].pack()
+                        else:
+                            labels[key] = tk.Label(root, text=f"{key}: {value}", bg='white', font=('Arial', 10))
+                            labels[key].pack()
+
+                    # Set the background color and add padding
+                    root.configure(bg='white')
+                    for label in labels.values():
+                        label.pack(padx=10, pady=2)
+
+                    # Start the periodic update
+                    update_labels()
+
+                    # Run the Tkinter event loop
+                    root.mainloop()
+
+                if __name__ == "__main__":
+                    create_widget()
 
         sleep(UPDATE_DURATION)
 
