@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=AirJuice
+Exec=bash /home/arnav/Downloads/AirStatus/airjuice.sh
+Icon=/home/arnav/Downloads/AirStatus/Airpods.png
+Terminal=false
+
+GenericName=airjuice

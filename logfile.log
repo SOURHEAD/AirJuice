@@ -1,0 +1,15 @@
+/home/arnav/Downloads/AirStatus/main.py:137: DeprecationWarning: sipPyTypeDict() is deprecated, the extension module should use sipPyTypeDictRef() instead
+  class FileWatcherApp(QWidget):
+/home/arnav/Downloads/AirStatus/main.py:48: FutureWarning: The discover function will removed in a future version, use BleakScanner.discover instead.
+  devices = await discover()
+/home/arnav/Downloads/AirStatus/main.py:52: FutureWarning: BLEDevice.rssi is deprecated and will be removed in a future version of Bleak, use AdvertisementData.rssi instead
+  if d.rssi >= MIN_RSSI and AIRPODS_MANUFACTURER in d.metadata['manufacturer_data']:
+/home/arnav/Downloads/AirStatus/main.py:36: FutureWarning: BLEDevice.rssi is deprecated and will be removed in a future version of Bleak, use AdvertisementData.rssi instead
+  if strongest_beacon is None or strongest_beacon.rssi < recent_beacons[i]["device"].rssi:
+/home/arnav/Downloads/AirStatus/main.py:52: FutureWarning: BLEDevice.metadata is deprecated and will be removed in a future version of Bleak, use AdvertisementData instead
+  if d.rssi >= MIN_RSSI and AIRPODS_MANUFACTURER in d.metadata['manufacturer_data']:
+/home/arnav/Downloads/AirStatus/main.py:53: FutureWarning: BLEDevice.metadata is deprecated and will be removed in a future version of Bleak, use AdvertisementData instead
+  data_hex = hexlify(bytearray(d.metadata['manufacturer_data'][AIRPODS_MANUFACTURER]))
+/home/arnav/Downloads/AirStatus/main.py:54: FutureWarning: BLEDevice.metadata is deprecated and will be removed in a future version of Bleak, use AdvertisementData instead
+  data_length = len(hexlify(bytearray(d.metadata['manufacturer_data'][AIRPODS_MANUFACTURER])))
+SUCCESS FROM INSIDE MAIN FUNCTION {"status": 1, "charge": {"left": 75, "right": 5, "case": -1}, "charging_left": false, "charging_right": true, "charging_case": false, "model": "AirPodsPro", "date": "2024-06-25 15:16:49", "raw": "0719010e203307af01000532371fe219a7deb30ea71b82fd109825"}

@@ -1,0 +1,1 @@
+{"status": 1, "charge": {"left": 75, "right": 5, "case": -1}, "charging_left": false, "charging_right": true, "charging_case": false, "model": "AirPodsPro", "date": "2024-06-25 15:16:49", "raw": "0719010e203307af01000532371fe219a7deb30ea71b82fd109825"}
