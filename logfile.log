@@ -12,4 +12,4 @@
   data_hex = hexlify(bytearray(d.metadata['manufacturer_data'][AIRPODS_MANUFACTURER]))
 /home/arnav/Downloads/AirStatus/main.py:54: FutureWarning: BLEDevice.metadata is deprecated and will be removed in a future version of Bleak, use AdvertisementData instead
   data_length = len(hexlify(bytearray(d.metadata['manufacturer_data'][AIRPODS_MANUFACTURER])))
-SUCCESS FROM INSIDE MAIN FUNCTION {"status": 1, "charge": {"left": 75, "right": 5, "case": -1}, "charging_left": false, "charging_right": true, "charging_case": false, "model": "AirPodsPro", "date": "2024-06-25 15:16:49", "raw": "0719010e203307af01000532371fe219a7deb30ea71b82fd109825"}
+SUCCESS FROM INSIDE MAIN FUNCTION {"status": 1, "charge": {"left": 15, "right": 85, "case": -1}, "charging_left": false, "charging_right": true, "charging_case": false, "model": "AirPods3", "date": "2024-06-26 08:36:07", "raw": "12197093c915189b884019823df384702f0352ae231299badb01b5"}

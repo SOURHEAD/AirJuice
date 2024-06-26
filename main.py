@@ -138,23 +138,40 @@ class FileWatcherApp(QWidget):
     def __init__(self, app):
         super().__init__()
 
-        self.setWindowTitle("AIRJOOOS")
-        self.setGeometry(100, 100, 600, 400)  # (x, y, width, height)
+        self.setWindowTitle("                 AIRJOOOS")
+        self.setGeometry(100, 100, 300, 300)  # (x, y, width, height)
 
         main_layout = QVBoxLayout()
+        
+        self.update_file_content()
+        
+        c_l_s=""
+        c_r_s=""
+        c_c_s=""
+        if self.charging_left:
+            c_l_s="⚡"
+        if self.charging_right:
+            c_r_s="⚡"
+        if self.charging_case:
+            c_c_s="⚡"
+        
+        label_l = QLabel(str(self.charge_info["left"])+c_l_s, self)
+        label_r = QLabel(str(self.charge_info["right"])+c_r_s, self)
+        label_c = QLabel(str(self.charge_info["case"])+c_c_s, self)
 
         # Horizontal layout for AirPods images
         airpods_layout = QHBoxLayout()
-        airpods_layout.addSpacerItem(QSpacerItem(167, 5, QSizePolicy.Minimum, QSizePolicy.Minimum))
+        airpods_layout.addSpacerItem(QSpacerItem(66, 5, QSizePolicy.Minimum, QSizePolicy.Minimum))
         # Create labels for displaying left and right AirPods images
         l_airpod_label = QLabel(self)
         l_airpod_pixmap = QPixmap("/home/arnav/Downloads/AirStatus/pictures/l_airpod_removebg.png")
         l_airpod_label.setPixmap(l_airpod_pixmap)
         l_airpod_label.resize(l_airpod_pixmap.width(), l_airpod_pixmap.height())
+        #l_airpod_label.move(660,90)
         airpods_layout.addWidget(l_airpod_label)
 
         # Adding space between the images
-        airpods_layout.addSpacerItem(QSpacerItem(10, 5, QSizePolicy.Minimum, QSizePolicy.Minimum))
+        airpods_layout.addSpacerItem(QSpacerItem(8, 5, QSizePolicy.Minimum, QSizePolicy.Minimum))
 
         r_airpod_label = QLabel(self)
         r_airpod_pixmap = QPixmap("/home/arnav/Downloads/AirStatus/pictures/r_airpod_removebg.png")
@@ -163,30 +180,53 @@ class FileWatcherApp(QWidget):
         airpods_layout.addWidget(r_airpod_label)
 
         main_layout.addLayout(airpods_layout)
+        
+        labels_airpods = QHBoxLayout()
+        labels_airpods.addSpacerItem(QSpacerItem(76, 5, QSizePolicy.Minimum, QSizePolicy.Minimum))
+        labels_airpods.addWidget(label_l)
+        labels_airpods.addSpacerItem(QSpacerItem(8, 5, QSizePolicy.Minimum, QSizePolicy.Minimum))
+        labels_airpods.addWidget(label_r)
+        main_layout.addLayout(labels_airpods)
 
+        
         # Adding a stretchable space to ensure the case image is centered
-        main_layout.addSpacerItem(QSpacerItem(20, 0, QSizePolicy.Minimum, QSizePolicy.Minimum))
-
+        #main_layout.addSpacerItem(QSpacerItem(12, 0, QSizePolicy.Minimum, QSizePolicy.Minimum))
+        # Create a label for displaying the file content
+        """self.file_label = QLabel(self)
+        self.file_label.setAlignment(Qt.AlignCenter)"""
+        
+        """
+        self.label_1 = QLabel("Bottom", self)
+        self.label_1.resize(60, 60)
+        self.label_1.move(20, 20)
+        self.label_1.setStyleSheet("border: 1px solid black;")
+        
+        # aligning label to the bottom
+        self.label_1.setAlignment(Qt.AlignCenter)
+        """
+        
+        
+        
         # Create label for displaying case image
         case_label = QLabel(self)
         case_pixmap = QPixmap("/home/arnav/Downloads/AirStatus/pictures/case_open_removebg.png")
         case_label.setPixmap(case_pixmap)
         case_label.setAlignment(Qt.AlignCenter)
         main_layout.addWidget(case_label, alignment=Qt.AlignCenter)
-
+        main_layout.addWidget(label_c, alignment=Qt.AlignCenter)
+        
         # Adding a stretchable space to push the text to the bottom
         main_layout.addSpacerItem(QSpacerItem(20, 0, QSizePolicy.Minimum, QSizePolicy.Minimum))
-
-        # Create a label for displaying the file content
-        self.file_label = QLabel(self)
-        self.file_label.setAlignment(Qt.AlignCenter)
-        main_layout.addWidget(self.file_label)
+        main_layout.addWidget(QLabel(str(self.model), self), alignment=Qt.AlignCenter)
+        
+        #main_layout.addWidget(self.file_label)
 
         self.setLayout(main_layout)
 
         # Create a QTimer to check the file content periodically
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update_file_content)
+
         self.timer.start(1000)  # Update every 1000 milliseconds (1 second)
 
     def update_file_content(self):
@@ -196,14 +236,16 @@ class FileWatcherApp(QWidget):
                 data = json.loads(content)
 
                 # Extract information from the JSON data
-                charge_info = data.get("charge", {})
-                charging_left = data.get("charging_left", False)
-                charging_right = data.get("charging_right", False)
-                charging_case = data.get("charging_case", False)
-                model = data.get("model", "Unknown")
-
+                self.charge_info = data.get("charge", {})
+                self.charging_left = data.get("charging_left", False)
+                self.charging_right = data.get("charging_right", False)
+                self.charging_case = data.get("charging_case", False)
+                self.model = data.get("model", "Unknown")
+        except:
+            pass
+        
                 # Construct the display text
-                text = (
+            """     text = (
                     f"Charge: {charge_info}\n"
                     f"Charging Left: {charging_left}\n"
                     f"Charging Right: {charging_right}\n"
@@ -216,7 +258,7 @@ class FileWatcherApp(QWidget):
         except FileNotFoundError:
             self.file_label.setText("File not found.")
         except json.JSONDecodeError:
-            self.file_label.setText("Error decoding JSON.")
+            self.file_label.setText("Error decoding JSON.")"""
 
 async def main():
     app = QApplication(sys.argv)
